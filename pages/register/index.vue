@@ -8,12 +8,13 @@
         <v-col cols="12">
           <div class="mt-8 text-primary text-title text-center">Step 1 of 2</div>
         </v-col>
-        <v-col cols="12">
-          <div class="text-center pb-0">
-            <img src="https://image.freepik.com/free-vector/cartoon-running-men-running-nature-minimal-flat-illustration_97843-63.jpg" alt="img" width=155>
+        <v-col cols="12" class="">
+          <div class="text-center pb-0 profile-img">
+            <img v-if="getLine.pictureUrl == ''" src="https://image.freepik.com/free-vector/cartoon-running-men-running-nature-minimal-flat-illustration_97843-63.jpg" alt="img" width=155>
+            <img v-else :src="getLine.pictureUrl" alt="img" width=155/>
           </div>
           <v-col cols="12" class="text-center pt-1 pb-0">
-            Display name
+            {{getLine.displayName}}
           </v-col>
           <v-form>
             <v-col cols="12">
@@ -46,8 +47,31 @@
 </template>
 
 <script>
-
+const axios = require('axios');
 export default {
+  mounted() {
+    liff.init({
+      liffId: '1655563676-nLozlkd2'
+    })
+    .then(()=> {
+      console.log("TEST")
+      if (liff.isLoggedIn()) {
+        console.log("Logged in")
+        liff.getProfile().then((profile)=> {
+          this.$store.dispatch('setLine', profile)
+          this.isDone()
+        })
+      } else {
+        console.log("Not logged in")
+        liff.login();
+      }
+    })
+  },
+  computed: {
+    getLine() {
+      return this.$store.getters.getLine
+    }
+  },
   data(){
     return ({
       form: {
@@ -58,6 +82,13 @@ export default {
     })
   },
   methods: {
+    isDone() {
+      axios.get(`https://nuxt-event-app-default-rtdb.firebaseio.com/members/${this.$store.getters.getLine.userId}/profile.json`).then((res) => {
+        if (res.data !== null) {
+          this.$router.push('/register/done')
+        }
+      })
+    },
     chooseGender(gender) {
       this.form.gender = gender;
     },
@@ -125,5 +156,10 @@ export default {
     margin-bottom: 0;
     align-self: center;
     margin-right: 15px;
+  }
+  .profile-img {
+    img{
+      border-radius: 50%;
+    }
   }
 </style>

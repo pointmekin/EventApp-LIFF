@@ -14,6 +14,7 @@
             <v-text-field
               v-model="form.email"
               dense
+              type="email"
               label="Email"
               :rules="emailRules"
             ></v-text-field>
@@ -118,7 +119,7 @@ export default {
     register(){
       if (this.validate()) {
         this.$store.dispatch('setRegister', this.form)
-        axios.patch("https://nuxt-event-app-default-rtdb.firebaseio.com/members/line:0001/profile.json", this.$store.getters.getRegister)
+        axios.patch(`https://nuxt-event-app-default-rtdb.firebaseio.com/members/${this.$store.getters.getLine.userId}/profile.json`, this.$store.getters.getRegister)
         .then((res)=> {
           this.$router.push('/register/done')
         })

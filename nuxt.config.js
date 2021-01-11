@@ -14,6 +14,9 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       { rel: 'stylesheet', href: "https://fonts.googleapis.com/css2?family=Quicksand&display=swap"},
       { rel: 'stylesheet', href: "https://fonts.googleapis.com/icon?family=Material+Icons"}
+    ],
+    script: [
+      { src:"https://static.line-scdn.net/liff/edge/2/sdk.js" }
     ]
   },
 
@@ -56,10 +59,10 @@ export default {
       }
     }
   },
-  server: {
-    port: 8000, // default: 3000
-    host: '0.0.0.0' // default: localhost
-  },
+  // server: {
+  //   port: 8000, // default: 3000
+  //   host: '0.0.0.0' // default: localhost
+  // },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {

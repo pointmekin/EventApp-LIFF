@@ -53,4 +53,10 @@ export default {
   .set-padding{
     padding: 0 20px;
   }
+  .mt-100 {
+    margin-top: 100px;
+  }
+  .mt-50 {
+    margin-top: 50px;
+  }
 </style>

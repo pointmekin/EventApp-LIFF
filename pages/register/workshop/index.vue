@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import Card from "../../components/Card";
+import Card from "../../../components/Card";
 const axios = require('axios');
 export default {
   components: {
@@ -108,12 +108,12 @@ export default {
     next() {
       if (this.index === this.workshops.length -1) {
         this.$store.dispatch('setRegister', this.form)
-        axios.patch("https://nuxt-event-app-default-rtdb.firebaseio.com/workshops/line:0001.json", {...this.selectedWorkshop})
+        axios.patch(`https://nuxt-event-app-default-rtdb.firebaseio.com/workshops/${this.$store.getters.getLine.userId}.json`, {...this.selectedWorkshop})
         .then((res)=> {
           console.log(res)
-          this.$router.push('/workshop/done')
+          this.$router.push('done')
         })
-        .catch(err=> {console.log(err)})
+        .catch(err=> {alert(err.toString())})
       } else {
         this.index = this.index + 1
         this.list = this.workshops[this.index]
